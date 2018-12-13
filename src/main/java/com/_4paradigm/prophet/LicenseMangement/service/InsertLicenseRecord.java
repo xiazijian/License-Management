@@ -9,6 +9,7 @@ import java.util.Map;
 public class InsertLicenseRecord {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
     public  void insert(Map<String,String> map){
         String sql = "insert into license_record (name,license,configuration) values (?,?,?)";
         Object args[] = {map.get("name"),map.get("license"),map.get("configuration")};
