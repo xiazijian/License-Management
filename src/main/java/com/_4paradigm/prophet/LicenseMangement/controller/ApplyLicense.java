@@ -16,10 +16,13 @@ import java.util.Map;
 @RestController
 public class ApplyLicense {
     @Autowired
-    InsertLicenseRecord insertLicenseRecord;
+    private InsertLicenseRecord insertLicenseRecord;
+
+
     @PostMapping(value="generate")
     public String generateLicense(HttpEntity httpEntity, HttpServletResponse response)  {
         System.out.println(httpEntity.getBody());
+        System.out.println("json:"+JSON.toJSONString(httpEntity.getBody()));
         Map json = (Map) httpEntity.getBody();
         String config = JSON.toJSONString(httpEntity.getBody());
         String result=null;
