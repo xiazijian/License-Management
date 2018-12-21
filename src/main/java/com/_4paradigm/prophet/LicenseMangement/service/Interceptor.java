@@ -4,19 +4,28 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 
 public class Interceptor implements HandlerInterceptor{
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("进入拦截器了");
+        //解决跨域问题
+        //response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        response.setHeader("Access-Control-Allow-Credentials","true"); //是否支持cookie跨域
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type");
         Object user = request.getSession().getAttribute("user");
-        if (user==null){
+        System.out.println("拦截器里取得的session："+request.getSession().getId());
+        System.out.println(user);
+        /*if (user==null){
             System.out.println("sesison中没有用户名");
             PrintWriter printWriter = response.getWriter();
+            response.setStatus(200);
             printWriter.write("{code:403,message:\"session is invalid,please login again !\"}");
             return false;
-        }
+        }*/
         return true;
     }
 
