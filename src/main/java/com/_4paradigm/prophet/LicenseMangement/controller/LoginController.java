@@ -31,6 +31,7 @@ public class LoginController {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, x-requested-with, X-Custom-Header, Authorization");
         //PrintWriter printWriter = response.getWriter();
+        ResponseEntity<Response> responseEntity;
         if(result) {
             HttpSession session = httpServletRequest.getSession();
             session.setAttribute("user",user.getName());
@@ -39,14 +40,16 @@ public class LoginController {
             res.setStatus("200");
             res.setData(user);
            // printWriter.write("{code:200,name:"+user.getName()+"}");
+            responseEntity = new ResponseEntity<>(res, HttpStatus.OK);
         }
-
         else{
+            System.out.println("用户名或密码错误");
             res.setStatus("403");
             res.setMsg("用户名或密码错误");
             //printWriter.write("{code:403,message:\"用户名或密码错误\"}");
+            responseEntity = new ResponseEntity<>(res, HttpStatus.FORBIDDEN);
         }
-        ResponseEntity<Response> responseEntity = new ResponseEntity<>(res, HttpStatus.OK);
+
         return responseEntity;
     }
 

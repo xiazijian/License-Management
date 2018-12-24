@@ -4,6 +4,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 
 public class Interceptor implements HandlerInterceptor{
     @Override
@@ -16,16 +17,20 @@ public class Interceptor implements HandlerInterceptor{
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type");
+
+        System.out.println("request.getMethod():"+request.getMethod());
+        System.out.println("request.getServletPath()"+request.getServletPath());
+
         Object user = request.getSession().getAttribute("user");
         System.out.println("拦截器里取得的session："+request.getSession().getId());
         System.out.println(user);
-        /*if (user==null){
+        if (!request.getMethod().equals("OPTIONS")&&user==null&&!request.getServletPath().equals("/login")){
             System.out.println("sesison中没有用户名");
             PrintWriter printWriter = response.getWriter();
-            response.setStatus(200);
+            response.setStatus(403);
             printWriter.write("{code:403,message:\"session is invalid,please login again !\"}");
             return false;
-        }*/
+        }
         return true;
     }
 
