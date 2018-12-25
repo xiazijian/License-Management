@@ -16,6 +16,7 @@ import java.io.IOException;
 
 @CrossOrigin
 @RestController
+@RequestMapping(value = "api")
 public class LoginController {
 
     @Autowired
