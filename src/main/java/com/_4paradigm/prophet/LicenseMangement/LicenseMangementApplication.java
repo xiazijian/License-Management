@@ -9,7 +9,7 @@ public class LicenseMangementApplication {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(LicenseMangementApplication.class, "--server.port=8081");
+		SpringApplication.run(LicenseMangementApplication.class);
 
 	}
 }

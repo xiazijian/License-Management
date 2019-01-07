@@ -11,8 +11,8 @@ public class InsertLicenseRecord {
     private JdbcTemplate jdbcTemplate;
 
     public  void insert(Map<String,String> map){
-        String sql = "insert into license_record (name,license,configuration) values (?,?,?)";
-        Object args[] = {map.get("name"),map.get("license"),map.get("configuration")};
+        String sql = "insert into license_record (name,license,configuration,isEffect) values (?,?,?,?)";
+        Object args[] = {map.get("name"),map.get("license"),map.get("configuration"),0};
         jdbcTemplate.update(sql, args);
 
 

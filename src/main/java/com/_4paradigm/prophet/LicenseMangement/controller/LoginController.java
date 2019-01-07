@@ -2,6 +2,7 @@ package com._4paradigm.prophet.LicenseMangement.controller;
 
 
 import com._4paradigm.prophet.LicenseMangement.entity.User;
+import com._4paradigm.prophet.LicenseMangement.entity.UserResult;
 import com._4paradigm.prophet.LicenseMangement.service.FindUser;
 import com._4paradigm.prophet.rest.model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class LoginController {
     public ResponseEntity<Response> login(@RequestBody User user, HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException {
         System.out.println(user);
         Response res = new Response();
-        Boolean result = findUser.findUser(user);
+        UserResult userResult = findUser.findUser(user);
         response.setHeader("Access-Control-Allow-Origin", httpServletRequest.getHeader("Origin"));
         response.setHeader("Access-Control-Allow-Credentials","true"); //是否支持cookie跨域
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
@@ -33,13 +34,14 @@ public class LoginController {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, x-requested-with, X-Custom-Header, Authorization");
         //PrintWriter printWriter = response.getWriter();
         ResponseEntity<Response> responseEntity;
-        if(result) {
+        if(userResult.getResult()) {
             HttpSession session = httpServletRequest.getSession();
             session.setAttribute("user",user.getName());
-            session.setMaxInactiveInterval(10000);
+            session.setMaxInactiveInterval(3600);
             System.out.println("在login controller里设置里session："+session.getId());
+            System.out.println("session中的user："+session.getAttribute("user"));
             res.setStatus("200");
-            res.setData(user);
+            res.setData(userResult.getUser());
            // printWriter.write("{code:200,name:"+user.getName()+"}");
             responseEntity = new ResponseEntity<>(res, HttpStatus.OK);
         }
