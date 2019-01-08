@@ -36,7 +36,8 @@ public class LoginController {
         ResponseEntity<Response> responseEntity;
         if(userResult.getResult()) {
             HttpSession session = httpServletRequest.getSession();
-            session.setAttribute("user",user.getName());
+            session.setAttribute("user",userResult.getUser().getName());
+            session.setAttribute("level",userResult.getUser().getLevel());
             session.setMaxInactiveInterval(3600);
             System.out.println("在login controller里设置里session："+session.getId());
             System.out.println("session中的user："+session.getAttribute("user"));

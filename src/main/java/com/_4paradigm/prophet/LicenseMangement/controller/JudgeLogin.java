@@ -29,4 +29,20 @@ public class JudgeLogin {
         }
         return responseEntity;
     }
+    @GetMapping(value = "judgeAdminSession")
+    public ResponseEntity<Response> judgeAdminSession(HttpServletRequest httpServletRequest){
+        ResponseEntity<Response> responseEntity;
+        Response res = new Response();
+        Object level = httpServletRequest.getSession().getAttribute("level");
+        System.out.println("judgeAdminSession中level："+level);
+        if(!level.toString().equals("0")){
+            res.setMsg("请使用管理员登录");
+            responseEntity = new ResponseEntity<>(res, HttpStatus.FORBIDDEN);
+        }
+        else{
+            res.setMsg("管理员登录");
+            responseEntity = new ResponseEntity<>(res, HttpStatus.OK);
+        }
+        return responseEntity;
+    }
 }

@@ -26,6 +26,41 @@ public class LicenseRecordService {
                         licenseRecord.setConfiguration(resultSet.getString("configuration"));
                         licenseRecord.setName(resultSet.getString("name"));
                         licenseRecord.setLicense(resultSet.getString("license"));
+                        licenseRecord.setIsEffect(resultSet.getInt("isEffect"));
+                        return licenseRecord;
+                    }
+                }
+        );
+    }
+    public List<LicenseRecord> getUserList(String user,int isEffect) {
+        String sql = "SELECT * FROM license_record WHERE  isEffect = "+isEffect+" and name='"+user+"'";
+
+        return (List<LicenseRecord>) jdbcTemplate.query(sql, new RowMapper<LicenseRecord>() {
+                    @Override
+                    public LicenseRecord mapRow(ResultSet resultSet, int i) throws SQLException {
+                        LicenseRecord licenseRecord = new LicenseRecord();
+                        licenseRecord.setId(resultSet.getInt("id"));
+                        licenseRecord.setConfiguration(resultSet.getString("configuration"));
+                        licenseRecord.setName(resultSet.getString("name"));
+                        licenseRecord.setIsEffect(resultSet.getInt("isEffect"));
+                        // 这里不set License 是因为不能给用户在没通过前返回License
+                        return licenseRecord;
+                    }
+                }
+        );
+    }
+    public List<LicenseRecord> getUserPassList(String user,int isEffect) {
+        String sql = "SELECT * FROM license_record WHERE  isEffect = "+isEffect+" and name='"+user+"'";
+
+        return (List<LicenseRecord>) jdbcTemplate.query(sql, new RowMapper<LicenseRecord>() {
+                    @Override
+                    public LicenseRecord mapRow(ResultSet resultSet, int i) throws SQLException {
+                        LicenseRecord licenseRecord = new LicenseRecord();
+                        licenseRecord.setId(resultSet.getInt("id"));
+                        licenseRecord.setConfiguration(resultSet.getString("configuration"));
+                        licenseRecord.setName(resultSet.getString("name"));
+                        licenseRecord.setLicense(resultSet.getString("license"));
+                        licenseRecord.setIsEffect(resultSet.getInt("isEffect"));
                         return licenseRecord;
                     }
                 }

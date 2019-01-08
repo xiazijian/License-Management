@@ -23,7 +23,7 @@ public class Interceptor implements HandlerInterceptor{
 
         Object user = request.getSession().getAttribute("user");
         System.out.println("拦截器里取得的session："+request.getSession().getId());
-        System.out.println(user);
+        System.out.println("session中的user："+user);
         if (!request.getMethod().equals("OPTIONS")&&user==null&&!request.getServletPath().equals("/api/login")){
             System.out.println("sesison中没有用户名");
             PrintWriter printWriter = response.getWriter();
