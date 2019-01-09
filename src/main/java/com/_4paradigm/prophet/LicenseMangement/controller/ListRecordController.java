@@ -18,19 +18,29 @@ public class ListRecordController {
         System.out.println("LicenseRecord:"+licenseRecordService.getList());
         return licenseRecordService.getList();
     }
+    @GetMapping(value="listAllPassRecord")
+    public List<LicenseRecord> getAllPassList(){
+        System.out.println("listAllPassRecord:"+licenseRecordService.getAllPassList());
+        return licenseRecordService.getAllPassList();
+    }
+    @GetMapping(value="listAllRefuseRecord")
+    public List<LicenseRecord> geAllRefusetList(){
+        System.out.println("listAllRefuseRecord:"+licenseRecordService.geAllRefusetList());
+        return licenseRecordService.geAllRefusetList();
+    }
     @GetMapping(value="userListRecord")
     public List<LicenseRecord> getUserList(@RequestParam(name = "name") String name){
-        System.out.println("LicenseRecord:"+licenseRecordService.getUserList(name,0));
+        System.out.println("userListRecord:"+licenseRecordService.getUserList(name,0));
         return licenseRecordService.getUserList(name,0);
     }
     @GetMapping(value="userListPassRecord")
     public List<LicenseRecord> getUserPassList(@RequestParam(name = "name") String name){
-        System.out.println("LicenseRecord:"+licenseRecordService.getUserPassList(name,1));
+        System.out.println("userListPassRecord:"+licenseRecordService.getUserPassList(name,1));
         return licenseRecordService.getUserPassList(name,1);
     }
     @GetMapping(value="userListRefudeRecord")
     public List<LicenseRecord> getUserRefudeList(@RequestParam(name = "name") String name){
-        System.out.println("LicenseRecord:"+licenseRecordService.getUserList(name,2));
+        System.out.println("userListRefudeRecord:"+licenseRecordService.getUserList(name,2));
         return licenseRecordService.getUserList(name,2);
     }
 }
