@@ -20,6 +20,11 @@ public class LicenseRecordService {
         return jdbcTemplate.queryForObject(sql,Integer.class);
     }
 
+    public int getLicenePassRecordCount(){
+        String sql = "SELECT count(*) FROM license_record WHERE  isEffect = 1";
+        return jdbcTemplate.queryForObject(sql,Integer.class);
+    }
+
     public List<LicenseRecord> getLimitList(int start ,int count){
         String sql = "SELECT * FROM license_record WHERE  isEffect = 0 limit "+(start-1)*count+","+count;
         return (List<LicenseRecord>) jdbcTemplate.query(sql, new RowMapper<LicenseRecord>() {
@@ -46,6 +51,22 @@ public class LicenseRecordService {
                         licenseRecord.setId(resultSet.getInt("id"));
                         licenseRecord.setConfiguration(resultSet.getString("configuration"));
                         licenseRecord.setName(resultSet.getString("name"));
+                        licenseRecord.setIsEffect(resultSet.getInt("isEffect"));
+                        return licenseRecord;
+                    }
+                }
+        );
+    }
+    public List<LicenseRecord> getAllPassLimitList(int start ,int count) {
+        String sql = "SELECT * FROM license_record WHERE  isEffect = 1 limit "+(start-1)*count+","+count;
+        return (List<LicenseRecord>) jdbcTemplate.query(sql, new RowMapper<LicenseRecord>() {
+                    @Override
+                    public LicenseRecord mapRow(ResultSet resultSet, int i) throws SQLException {
+                        LicenseRecord licenseRecord = new LicenseRecord();
+                        licenseRecord.setId(resultSet.getInt("id"));
+                        licenseRecord.setConfiguration(resultSet.getString("configuration"));
+                        licenseRecord.setName(resultSet.getString("name"));
+                        licenseRecord.setLicense(resultSet.getString("license"));
                         licenseRecord.setIsEffect(resultSet.getInt("isEffect"));
                         return licenseRecord;
                     }
