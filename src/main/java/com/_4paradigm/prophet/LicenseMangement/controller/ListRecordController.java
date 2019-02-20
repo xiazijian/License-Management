@@ -18,6 +18,11 @@ public class ListRecordController {
         System.out.println("数据数目："+licenseRecordService.getLiceneRecordCount());
         return licenseRecordService.getLiceneRecordCount();
     }
+    @GetMapping(value = "LicenseRefuseRecordCount")
+    public int getLicenseRefuseRecordCount(){
+        System.out.println("数据数目："+licenseRecordService.getLiceneRefuseRecordCount());
+        return licenseRecordService.getLiceneRefuseRecordCount();
+    }
     @GetMapping(value = "LicensePassRecordCount")
     public int getLicensePassRecordCount(){
         System.out.println("数据数目："+licenseRecordService.getLicenePassRecordCount());
@@ -42,6 +47,11 @@ public class ListRecordController {
     public List<LicenseRecord> getAllPassList(){
         System.out.println("listAllPassRecord:"+licenseRecordService.getAllPassList());
         return licenseRecordService.getAllPassList();
+    }
+    @GetMapping(value="listAllRefuseLimitRecord")
+    public List<LicenseRecord> geAllRefusetLimitList(@RequestParam(name="start") String start,@RequestParam(name="limit") int limit){
+        System.out.println("listAllRefuseRecord:"+licenseRecordService.geAllRefusetLimitList(Integer.valueOf(start), limit));
+        return licenseRecordService.geAllRefusetLimitList(Integer.valueOf(start), limit);
     }
     @GetMapping(value="listAllRefuseRecord")
     public List<LicenseRecord> geAllRefusetList(){
