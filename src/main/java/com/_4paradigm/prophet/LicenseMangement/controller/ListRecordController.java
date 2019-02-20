@@ -13,6 +13,16 @@ import java.util.List;
 public class ListRecordController {
     @Autowired
     private LicenseRecordService licenseRecordService;
+    @GetMapping(value = "LicenseRecordCount")
+    public int getLicenseRecordCount(){
+        System.out.println("数据数目："+licenseRecordService.getLiceneRecordCount());
+        return licenseRecordService.getLiceneRecordCount();
+    }
+    @GetMapping(value="getLimitList")
+    public List<LicenseRecord> getLimitList(@RequestParam(name="start") String start,@RequestParam(name="limit") int limit){
+        System.out.println("LicenseRecord:"+licenseRecordService.getLimitList(Integer.valueOf(start), limit));
+        return licenseRecordService.getLimitList(Integer.valueOf(start), limit);
+    }
     @GetMapping(value="listRecord")
     public List<LicenseRecord> getList(){
         System.out.println("LicenseRecord:"+licenseRecordService.getList());

@@ -15,6 +15,27 @@ public class LicenseRecordService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    public int getLiceneRecordCount(){
+        String sql = "SELECT count(*) FROM license_record WHERE  isEffect = 0";
+        return jdbcTemplate.queryForObject(sql,Integer.class);
+    }
+
+    public List<LicenseRecord> getLimitList(int start ,int count){
+        String sql = "SELECT * FROM license_record WHERE  isEffect = 0 limit "+(start-1)*count+","+count;
+        return (List<LicenseRecord>) jdbcTemplate.query(sql, new RowMapper<LicenseRecord>() {
+                    @Override
+                    public LicenseRecord mapRow(ResultSet resultSet, int i) throws SQLException {
+                        LicenseRecord licenseRecord = new LicenseRecord();
+                        licenseRecord.setId(resultSet.getInt("id"));
+                        licenseRecord.setConfiguration(resultSet.getString("configuration"));
+                        licenseRecord.setName(resultSet.getString("name"));
+                        licenseRecord.setIsEffect(resultSet.getInt("isEffect"));
+                        return licenseRecord;
+                    }
+                }
+        );
+    }
+
     public List<LicenseRecord> getList() {
         String sql = "SELECT * FROM license_record WHERE  isEffect = 0";
 
