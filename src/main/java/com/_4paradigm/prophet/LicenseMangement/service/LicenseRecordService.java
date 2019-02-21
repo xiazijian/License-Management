@@ -96,7 +96,7 @@ public class LicenseRecordService {
         );
     }
     public List<LicenseRecord> geAllRefusetLimitList(int start ,int count) {
-        String sql = "SELECT * FROM license_record WHERE  isEffect = 1 limit "+(start-1)*count+","+count;
+        String sql = "SELECT * FROM license_record WHERE  isEffect = 2 limit "+(start-1)*count+","+count;
 
         return (List<LicenseRecord>) jdbcTemplate.query(sql, new RowMapper<LicenseRecord>() {
                     @Override
