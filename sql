@@ -1,3 +1,5 @@
+数据库名：License
+
 REATE TABLE `license_record` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
