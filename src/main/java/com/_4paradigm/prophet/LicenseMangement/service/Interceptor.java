@@ -4,7 +4,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 
 public class Interceptor implements HandlerInterceptor{
     @Override
@@ -24,13 +23,13 @@ public class Interceptor implements HandlerInterceptor{
         Object user = request.getSession().getAttribute("user");
         System.out.println("拦截器里取得的session："+request.getSession().getId());
         System.out.println("session中的user："+user);
-        if (!request.getMethod().equals("OPTIONS")&&user==null&&!request.getServletPath().equals("/api/login")){
+        /*if (!request.getMethod().equals("OPTIONS")&&user==null&&!request.getServletPath().equals("/api/login")){
             System.out.println("sesison中没有用户名");
             PrintWriter printWriter = response.getWriter();
             response.setStatus(403);
             printWriter.write("{code:403,message:\"session is invalid,please login again !\"}");
             return false;
-        }
+        }*/
         return true;
     }
 

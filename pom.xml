@@ -87,6 +87,25 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.41</version>
 		</dependency>
+        <dependency>
+            <groupId>ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.6.5</version>
+        </dependency>
+
+		<!--hadoop 配置-->
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-common</artifactId>
+			<version>2.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-hdfs</artifactId>
+			<version>2.7.7</version>
+		</dependency>
+
+
     </dependencies>
 
 	<build>
