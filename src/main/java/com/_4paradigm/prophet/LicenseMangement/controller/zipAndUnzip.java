@@ -1,30 +1,23 @@
 package com._4paradigm.prophet.LicenseMangement.controller;
 
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Expand;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class zipAndUnzip {
     public static void main(String[] args) throws Exception {
-        String path = "/Users/xiaweiyi/Downloads/hehe";
-        String re = DigestUtils.md5Hex(new FileInputStream(path));
+        String path = "/Users/xiaweiyi/Downloads/experience.zip";
+        /*String re = DigestUtils.md5Hex(new FileInputStream(path));
         System.out.println(re);
-        System.out.println(DigestUtils.md5Hex(new FileInputStream("/Users/xiaweiyi/Downloads/a/hehe")));
-       // unzip("/Users/xiaweiyi/Downloads/a.zip","/Users/xiaweiyi/Downloads/a");
-        Map<String,String> map =readFiles("/Users/xiaweiyi/Downloads/a");
-        for(String key:map.keySet()){
-            System.out.println("Key:"+key);
-            System.out.println("value:"+map.get(key));
-        }
-        /*for(String value:map.values()){
-            System.out.println("value:"+value);
-        }*/
+        System.out.println(DigestUtils.md5Hex(new FileInputStream("/Users/xiaweiyi/Downloads/a/hehe")));*/
+       //unzip("/Users/xiaweiyi/Downloads/experience.zip","/Users/xiaweiyi/Downloads/experience");
+        System.out.println(UUID.randomUUID().toString());
+
     }
     public Map<String,String> compareAndUpdateFile( Map<String,String> oldFile, Map<String,String> newFile){
         Map<String,String> map = new HashMap<>();

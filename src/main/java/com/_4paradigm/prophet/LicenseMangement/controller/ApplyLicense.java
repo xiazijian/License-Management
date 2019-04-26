@@ -9,12 +9,14 @@ import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+
 @CrossOrigin
 @RestController
 @RequestMapping(value = "api")
@@ -34,27 +36,26 @@ public class ApplyLicense {
         System.out.println(map.get("a"));
     }
 
-    @GetMapping(value = "/download")
-    public void download(HttpServletResponse response ) throws IOException {
-        String data = "ahsdjhajdhjashdjashdjhajdhajh";
-        OutputStream outputStream = response.getOutputStream();
-        response.setHeader("Content-Disposition", "attachment; filename=license.zip");
-        try {
-            outputStream.write(data.getBytes());
-            outputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            outputStream.close();
-        }
+    @GetMapping(value = "/create")
+    public void create(HttpServletResponse response ) throws IOException {
+        String path = "/user/xiaweiyi/he.txt";
+        File file = new File("/Users/xiaweiyi/Downloads/he.txt");
+        System.out.println(file.length());
+        FileInputStream fileInputStream = new FileInputStream(file);
+        //hdfsUtils.createFile(path,fileInputStream);
+
     }
     @GetMapping(value = "/testHdfs")
-    public void testHdfs(HttpServletResponse response){
+    public String testHdfs(HttpServletResponse response) throws IOException {
         try {
-            hdfsUtils.readFile("/user/xiaweiyi/algo/OCR/classification/filesMD5.txt");
+            //hdfsUtils.readFile("/user/xiaweiyi/algo/OCR/classification/filesMD5.txt");
+           hdfsUtils.downloadExperiment("/test",response);
+            //response = hdfsUtils.downloadFile(response);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return "hehe";
+
     }
 
     @PostMapping(value="generate")
