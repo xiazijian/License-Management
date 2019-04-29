@@ -1,13 +1,13 @@
 package com._4paradigm.prophet.LicenseMangement.controller;
 
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Expand;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class zipAndUnzip {
     public static void main(String[] args) throws Exception {
@@ -16,7 +16,11 @@ public class zipAndUnzip {
         System.out.println(re);
         System.out.println(DigestUtils.md5Hex(new FileInputStream("/Users/xiaweiyi/Downloads/a/hehe")));*/
        //unzip("/Users/xiaweiyi/Downloads/experience.zip","/Users/xiaweiyi/Downloads/experience");
-        System.out.println(UUID.randomUUID().toString());
+        //System.out.println(UUID.randomUUID().toString());
+        String h = "00212649-2061-4bac-9de5-78c1aa430d78_IMAGE_CLASSIFICATION/meta";
+        String[] e = h.split("/");
+        String a = StringUtils.substringAfter(h,"/");
+        System.out.println(a);
 
     }
     public Map<String,String> compareAndUpdateFile( Map<String,String> oldFile, Map<String,String> newFile){

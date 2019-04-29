@@ -1,17 +1,25 @@
 package com._4paradigm.prophet.LicenseMangement.controller;
 
+import com._4paradigm.prophet.LicenseMangement.entity.BaseResponse;
 import com._4paradigm.prophet.LicenseMangement.service.HdfsUtils;
 import com._4paradigm.prophet.LicenseMangement.service.InsertLicenseRecord;
 import com._4paradigm.prophet.LicenseMangement.service.JudgeProduct;
 import com.alibaba.fastjson.JSON;
+import org.apache.tomcat.util.http.fileupload.FileItemIterator;
+import org.apache.tomcat.util.http.fileupload.FileItemStream;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -58,6 +66,46 @@ public class ApplyLicense {
 
     }
 
+    @PostMapping("/uploadCheck")
+    public BaseResponse uploadCheck(HttpServletRequest request) throws IOException, FileUploadException {
+        if (!ServletFileUpload.isMultipartContent(request)) {
+            System.out.println("unsupported protocol... must be multipart content!");
+            return new BaseResponse(BaseResponse.STATUS_BAD_REQUEST);
+        }
+        ServletFileUpload upload = new ServletFileUpload();
+        FileItemIterator iter = upload.getItemIterator(request);
+        Boolean result = true;
+        int count = 0;
+        String project = "";
+        String experiment = null;
+        while(iter.hasNext()){
+            FileItemStream item = iter.next();
+            InputStream inputStream = item.openStream();
+            System.out.println("item.openStream()-inputStream.available:"+inputStream.available());
+            count++;
+            if(item.isFormField()){
+                project = Streams.asString(inputStream, "UTF-8");
+                //文件先接收到
+                if(count!=1){
+
+                    result = hdfsUtils.checkAndUpload(experiment,project);
+                }
+            }else{
+                experiment = hdfsUtils.upload(inputStream);
+                // 先收到projectid
+               if(count!=1){
+                    result = hdfsUtils.checkAndUpload(experiment,project);
+                }
+            }
+        }
+        if(result){
+            return BaseResponse.success(experiment);
+        }else{
+            return new BaseResponse(BaseResponse.STATUS_INTERNAL_ERROR);
+        }
+
+    }
+    //生成license
     @PostMapping(value="generate")
     public String generateLicense(HttpEntity httpEntity, HttpServletResponse response)  {
         System.out.println(httpEntity.getBody());
