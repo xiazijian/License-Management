@@ -24,7 +24,6 @@ public class zipAndUnzip {
         String[] e = h.split("/");
         String a = StringUtils.substringAfter(h,"/");
         System.out.println(a);*/
-
         /*Pattern pattern = Pattern.compile("model\\.ckpt");
         String name = "autotune/model/model.ckpt-264.data-00001-of-00002";
         System.out.println(!pattern.matcher(name).find());*/
