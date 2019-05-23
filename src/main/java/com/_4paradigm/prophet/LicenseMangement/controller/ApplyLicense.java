@@ -1,6 +1,7 @@
 package com._4paradigm.prophet.LicenseMangement.controller;
 
 import com._4paradigm.prophet.LicenseMangement.entity.BaseResponse;
+import com._4paradigm.prophet.LicenseMangement.entity.PathRequest;
 import com._4paradigm.prophet.LicenseMangement.service.HdfsUtils;
 import com._4paradigm.prophet.LicenseMangement.service.InsertLicenseRecord;
 import com._4paradigm.prophet.LicenseMangement.service.JudgeProduct;
@@ -57,13 +58,50 @@ public class ApplyLicense {
     public String testHdfs(HttpServletResponse response) throws IOException {
         try {
             //hdfsUtils.readFile("/user/xiaweiyi/algo/OCR/classification/filesMD5.txt");
-           hdfsUtils.downloadExperiment("/test",response);
+           hdfsUtils.downloadExperiment("/05bdf670-059d-4a9e-b506-1405bbd0464a",response);
             //response = hdfsUtils.downloadFile(response);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "hehe";
 
+    }
+    @GetMapping(value = "/{id}/testThread")
+    public BaseResponse testThread(@PathVariable(value = "id") String id){
+        String x= "haha";
+        new Thread(){
+           public void run(){
+               for(int i=0;i<100000;i++){
+                   System.out.println(x+id);
+               }
+           }
+        }.start();
+        System.out.println("xwy");
+        return BaseResponse.success("hehe");
+    }
+    //测试当浏览器发送一个请求，当没有收到response的时候主动关闭了后台会收到什么异常
+    @PostMapping(value = "testStopRequest")
+    public BaseResponse testStopRequest(){
+        for(int i=0;i<1000;i++){
+            for (int j= 0;j<1000;j++){
+                System.out.println(i+"::"+j);
+            }
+        }
+        return BaseResponse.success("xwy");
+    }
+
+    @PostMapping(value = "testRes")
+    public BaseResponse test(HttpServletResponse response) throws IOException {
+        //response.sendError(403,"hehe");
+        return new BaseResponse(BaseResponse.STATUS_EXPERIMENT_TYPE_ERROR);
+    }
+    @GetMapping(value = "/list")
+    public void list() throws IOException {
+        hdfsUtils.listFile("/05bdf670-059d-4a9e-b506-1405bbd0464a");
+    }
+    @PostMapping("/post")
+    public void p (@RequestBody PathRequest path){
+        System.out.println("path::"+path.getPath());
     }
 
     @PostMapping("/uploadCheck")

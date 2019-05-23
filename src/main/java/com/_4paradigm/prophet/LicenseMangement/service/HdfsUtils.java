@@ -141,6 +141,14 @@ public class HdfsUtils {
 
     }
 
+    public void listFile(String hdfsPath) throws IOException {
+        FileSystem fileSystem = getFileSystem();
+        RemoteIterator<LocatedFileStatus> iter = fileSystem.listFiles(new Path(hdfsPath),true);
+        while (iter.hasNext()) {
+            LocatedFileStatus fileStatus = iter.next();
+            System.out.println("~~~:"+fileStatus.getPath().getName()+"||:"+fileStatus.getPath());
+        }
+    }
     public void downloadExperiment(String path, HttpServletResponse response) {
         Path path1 = new Path(path);
         FileSystem fileSystem = null;
@@ -159,6 +167,7 @@ public class HdfsUtils {
             fileSystem = getFileSystem();
             FileStatus[] fileStatuses = fileSystem.listStatus(path1);
             for(FileStatus fileStatus:fileStatuses){
+                System.out.println("fileStatus.getPath().toString():"+fileStatus.getPath().toString());
                 String[] f = fileStatus.getPath().toString().split("/");
                 compress(f[f.length-1],fileStatus,zipOutputStream,fileSystem);
             }
