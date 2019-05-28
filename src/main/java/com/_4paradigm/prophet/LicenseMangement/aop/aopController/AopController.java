@@ -20,7 +20,18 @@ public class AopController {
     @GetMapping(value = "/aop2/{id}")
     public String aopException(){
         System.out.println("进入controller:aopException");
-        return aopService.testException();
+        String x="x";
+        try{
+            x= aopService.testException();
+        }catch (Exception e){
+            System.out.println("exception:");
+            e.printStackTrace();
+        }
+        System.out.println("hahahah");
+        for(int i=0;i<10;i++){
+            System.out.println(i);
+        }
+        return x;
 
     }
 

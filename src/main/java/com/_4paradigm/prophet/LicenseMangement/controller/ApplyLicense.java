@@ -92,7 +92,7 @@ public class ApplyLicense {
 
     @PostMapping(value = "testRes")
     public BaseResponse test(HttpServletResponse response) throws IOException {
-        //response.sendError(403,"hehe");
+        response.sendError(403,"hehe");
         return new BaseResponse(BaseResponse.STATUS_EXPERIMENT_TYPE_ERROR);
     }
     @GetMapping(value = "/list")
