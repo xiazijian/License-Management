@@ -73,6 +73,9 @@ public class zipAndUnzip {
         key = "automl".getBytes("UTF-8");
         MessageDigest sha = MessageDigest.getInstance("SHA-1");
         key = sha.digest(key);
+        for(byte x:key){
+            System.out.println(x);
+        }
         key = Arrays.copyOf(key,16);
         SecretKey secretKey = new SecretKeySpec(key,"AES");
 
